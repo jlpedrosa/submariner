@@ -79,7 +79,6 @@ func testPoolCreation() {
 			Expect(len(pool.allocated)).Should(Equal(0))
 		})
 	})
-
 }
 
 func testIpAllocation() {
@@ -99,21 +98,21 @@ func testIpAllocation() {
 			Expect(ipnet.Contains(net.ParseIP(service1Ip))).Should(BeTrue())
 		})
 
-		It("should decrement available IPs pool size by 1", func() {
+		It("should decrement available IP Pool size by 1", func() {
 			Expect(available - len(pool.available)).Should(Equal(1))
 		})
 
-		It("should increment allocated IPs pool size by 1", func() {
+		It("should increment allocated IP Pool size by 1", func() {
 			Expect(len(pool.allocated) - allocated).Should(Equal(1))
 		})
 
-		It("should not decrement available IPs pool size if same key is reused", func() {
+		It("should not decrement available IP Pool size if same key is reused", func() {
 			_, err := pool.Allocate(service1)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(pool.size - len(pool.available)).Should(Equal(1))
 		})
 
-		It("should not increment allocated IPs pool size if same key is reused", func() {
+		It("should not increment allocated IP Pool size if same key is reused", func() {
 			_, err := pool.Allocate(service1)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(len(pool.allocated)).Should(Equal(1))
@@ -191,7 +190,7 @@ func testIpAllocation() {
 			})
 
 			It("should return same IP", func() {
-				Expect(requestedIp).Should(Equal(requestIp1))
+				Expect(requestedIp).Should(Equal(service1Ip))
 			})
 		})
 
@@ -203,9 +202,7 @@ func testIpAllocation() {
 				Expect(requestedIp).Should(Equal(""))
 			})
 		})
-
 	})
-
 }
 
 func testIpRelease() {
